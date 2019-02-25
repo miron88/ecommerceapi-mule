@@ -14,7 +14,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<db:mssql-connection host="den1.mssql7.gear.host" user="codeschool" password="miron.123" databaseName="codeschool" />
 	</db:config>
 	<flow name="ecommerceapiFlow" doc:id="24d6e99d-31d3-41e1-a5bc-2f6ff5d6ce7a" >
-		<http:listener doc:name="Gearhost_localhost" doc:id="400cc7d5-63ef-4a77-8de6-78878c597afa" config-ref="HTTP_Listener_config" path="/getCategories"/>
+		<http:listener doc:name="GetCategoryListener" doc:id="400cc7d5-63ef-4a77-8de6-78878c597afa" config-ref="HTTP_Listener_config" path="/getCategories"/>
 		<db:select doc:name="GetCategories" doc:id="6162c654-871a-4ba0-a301-54a210fa71c5" config-ref="Database_Config">
 			<db:sql >Select * from tblCategory</db:sql>
 		</db:select>
