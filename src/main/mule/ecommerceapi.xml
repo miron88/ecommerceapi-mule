@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e090169a-efe4-44c8-aabd-ee8dd8d90cc7" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="83be5e35-7e99-49ce-bbd2-4b89e0c8b6aa" >
+		<db:mssql-connection host="den1.mssql7.gear.host" user="codeschool" password="miron.123" databaseName="codeschool" />
+	</db:config>
+	<flow name="ecommerceapiFlow" doc:id="24d6e99d-31d3-41e1-a5bc-2f6ff5d6ce7a" >
+		<http:listener doc:name="Gearhost_localhost" doc:id="400cc7d5-63ef-4a77-8de6-78878c597afa" config-ref="HTTP_Listener_config" path="/getCategories"/>
+		<db:select doc:name="GetCategories" doc:id="6162c654-871a-4ba0-a301-54a210fa71c5" config-ref="Database_Config">
+			<db:sql >Select * from tblCategory</db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="4748dfa1-6ed2-4abb-864f-f4069c54b855" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="9820a65b-f691-4127-85cc-267ce78e8f67" />
+		
+		
+		
+		
+	</flow>
+</mule>
